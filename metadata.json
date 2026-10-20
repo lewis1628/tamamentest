@@ -1,0 +1,6 @@
+{
+  "name": "Şekilli Yazı Yazma & Süslü Fontlar",
+  "description": "Normal metinleri anında havalı şekilli yazılara, süslü fontlara ve oyun nicklerine dönüştürün. Tek tıkla kopyalayın, sosyal medya ve oyunlarda kullanın.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
