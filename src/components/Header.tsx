@@ -5,7 +5,8 @@ import {
   Bookmark, 
   Layers,
   Search,
-  ShieldCheck
+  ShieldCheck,
+  Menu
 } from 'lucide-react';
 
 interface HeaderProps {
@@ -23,6 +24,7 @@ interface HeaderProps {
   fontSize?: 'sm' | 'md' | 'lg';
   onCycleFontSize?: () => void;
   onQuickTransform?: (type: 'upper' | 'lower' | 'clean' | 'reverse' | 'binary' | 'morse') => void;
+  onOpenSidebar: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -32,6 +34,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenCommandPalette,
   onClear,
   hasText,
+  onOpenSidebar,
 }) => {
   return (
     <header className="sticky top-0 z-40 bg-[#0c1122]/95 backdrop-blur-2xl border-b border-indigo-950/90 shadow-2xl shadow-indigo-950/40">
@@ -39,7 +42,7 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="hidden sm:flex items-center justify-between px-4 sm:px-8 py-1 bg-[#070a14] border-b border-indigo-950/60 text-[11px] text-slate-400">
         <div className="flex items-center gap-2">
           <ShieldCheck className="w-3.5 h-3.5 text-blue-400" />
-          <span>Evrensel Unicode 15.1 Karakter Standardı</span>
+          <span>Evrensel Unicode Karakter Standardı</span>
           <span aria-hidden="true" className="text-indigo-800">·</span>
           <span className="text-indigo-300">Tüm cihazlar ve oyunlar ile %100 uyumlu</span>
         </div>
@@ -50,21 +53,32 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Main Studio Navigation Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3 sm:gap-6">
-        {/* Zone 1: Distinctive Brand Lockup */}
-        <div 
-          onClick={() => setActiveTab('fonts')} 
-          className="flex items-center gap-2.5 cursor-pointer whitespace-nowrap shrink-0 group select-none"
-        >
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-500 via-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30 group-hover:scale-105 group-hover:shadow-indigo-500/50 transition-all">
-            <Sparkles className="w-5 h-5 text-white" />
-          </div>
-          <div className="flex items-baseline gap-1.5">
-            <span className="font-display font-extrabold text-xl tracking-tight text-white">
-              Nick<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400">ora</span>
-            </span>
-            <span className="text-[10px] font-extrabold tracking-wider px-1.5 py-0.5 rounded bg-gradient-to-r from-blue-600/30 to-purple-600/30 text-indigo-300 border border-indigo-500/40 font-mono">
-              PRO
-            </span>
+        {/* Zone 1: Hamburger Menu Trigger + Brand Lockup */}
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          <button
+            onClick={onOpenSidebar}
+            className="p-2 -ml-1 rounded-xl text-slate-300 hover:text-white bg-[#0f152b] hover:bg-[#151c38] border border-indigo-900/60 hover:border-indigo-600/80 shadow-sm transition-all flex items-center justify-center shrink-0 cursor-pointer"
+            title="Menüyü Aç"
+            aria-label="Menüyü Aç"
+          >
+            <Menu className="w-5 h-5 text-indigo-300 hover:text-white" />
+          </button>
+
+          <div 
+            onClick={() => setActiveTab('fonts')} 
+            className="flex items-center gap-2.5 cursor-pointer whitespace-nowrap shrink-0 group select-none"
+          >
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-500 via-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30 group-hover:scale-105 group-hover:shadow-indigo-500/50 transition-all">
+              <Sparkles className="w-5 h-5 text-white" />
+            </div>
+            <div className="flex items-baseline gap-1.5">
+              <span className="font-display font-extrabold text-xl tracking-tight text-white">
+                Nick<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400">ora</span>
+              </span>
+              <span className="text-[10px] font-extrabold tracking-wider px-1.5 py-0.5 rounded bg-gradient-to-r from-blue-600/30 to-purple-600/30 text-indigo-300 border border-indigo-500/40 font-mono">
+                PRO
+              </span>
+            </div>
           </div>
         </div>
 

@@ -10,7 +10,8 @@ import {
   Zap,
   Bookmark,
   Copy,
-  Layers
+  Layers,
+  Scale
 } from 'lucide-react';
 import { Header } from './components/Header';
 import { TextInputArea } from './components/TextInputArea';
@@ -23,7 +24,8 @@ import { QRCodeModal } from './components/QRCodeModal';
 import { HistoryModal, HistoryItem } from './components/HistoryModal';
 import { CommandPaletteModal } from './components/CommandPaletteModal';
 import { BulkExportModal } from './components/BulkExportModal';
-import { KVKKModal } from './components/KVKKModal';
+import { SidebarDrawer } from './components/SidebarDrawer';
+import { LegalModal, LegalTab } from './components/LegalModal';
 import { FONT_STYLES, FontStyleItem, toBinary, toMorse } from './utils/textTransformers';
 
 type CategoryFilter = 'all' | 'popular' | 'nick' | 'aesthetic' | 'boxed' | 'special';
@@ -38,11 +40,18 @@ export default function App() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [fontSize, setFontSize] = useState<'sm' | 'md' | 'lg'>('md');
 
-  // Modals state
+  // Modals & Navigation state
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [isExportOpen, setIsExportOpen] = useState(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
-  const [isKVKKOpen, setIsKVKKOpen] = useState(false);
+  const [isLegalOpen, setIsLegalOpen] = useState(false);
+  const [legalTab, setLegalTab] = useState<LegalTab>('disclaimer');
+
+  const handleOpenLegal = (tab: LegalTab = 'disclaimer') => {
+    setLegalTab(tab);
+    setIsLegalOpen(true);
+  };
 
   // Favorites state with localStorage - starts completely empty by default
   const [favorites, setFavorites] = useState<string[]>(() => {
@@ -235,6 +244,25 @@ export default function App() {
         fontSize={fontSize}
         onCycleFontSize={handleCycleFontSize}
         onQuickTransform={handleQuickTransform}
+        onOpenSidebar={() => setIsSidebarOpen(true)}
+      />
+
+      {/* Slide-out Left Navigation Drawer */}
+      <SidebarDrawer
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        favoritesCount={favorites.length}
+        historyCount={history.length}
+        onOpenHistory={() => setIsHistoryOpen(true)}
+        onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+        onOpenExport={() => setIsExportOpen(true)}
+        onOpenLegal={handleOpenLegal}
+        onQuickTransform={handleQuickTransform}
+        totalFontsCount={FONT_STYLES.length}
       />
 
       {/* Main Content Area */}
@@ -513,29 +541,56 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="mt-auto border-t border-indigo-950 bg-[#070b14] py-6 relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-          <div className="flex items-center gap-2">
-            <span className="text-slate-300 font-medium">© 2026 Nickora PRO Stüdyo</span>
-            <span aria-hidden="true" className="text-indigo-800">·</span>
-            <span>Tüm hakları saklıdır</span>
+      <footer className="mt-auto border-t border-indigo-950 bg-[#070b14] py-8 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-5">
+          {/* Legal Disclaimer Box */}
+          <div className="p-4 rounded-xl bg-[#0b1021]/80 border border-indigo-900/60 text-slate-400 text-xs leading-relaxed space-y-1.5 shadow-sm">
+            <div className="flex items-center gap-2 text-slate-200 font-bold text-xs">
+              <Scale className="w-4 h-4 text-amber-400 shrink-0" />
+              <span>Yasal Uyarı & Marka Sorumluluk Reddi</span>
+            </div>
+            <p className="text-[11px] text-slate-400 leading-relaxed">
+              <strong>Nickora</strong>; kullanıcıların kendi cihazlarında bağımsız olarak şekilli metinler, süslü fontlar ve oyun nickleri oluşturmasını sağlayan ücretsiz bir stüdyo aracıdır. Sitede adı geçen üçüncü taraf markalar ve oyunlar (PUBG Mobile, Brawl Stars, Valorant, Free Fire, Roblox, Instagram, Discord, WhatsApp vb.) ilgili şirketlerin tescilli ticari markalarıdır. Nickora'nın bu kurumlarla resmi bir ticari bağı veya sponsorluğu bulunmamaktadır. Oluşturulan metinlerin mevzuata, genel ahlaka ve platform kurallarına uygunluğundan münhasıran kullanıcı sorumludur.
+            </p>
           </div>
-          <div className="flex flex-wrap items-center gap-4">
-            <span className="text-indigo-300 font-mono text-[11px] tabular-nums">Unicode 15.1 Uyumlu</span>
-            <span aria-hidden="true" className="text-indigo-800">·</span>
-            <button
-              onClick={() => setIsKVKKOpen(true)}
-              className="text-indigo-300/90 hover:text-white transition-colors underline flex items-center gap-1 font-medium"
-            >
-              <span>KVKK & Gizlilik Politikası</span>
-            </button>
-            <span aria-hidden="true" className="text-indigo-800">·</span>
-            <button 
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="text-slate-300 hover:text-white transition-colors"
-            >
-              Yukarı Çık ↑
-            </button>
+
+          {/* Legal Links and Copyright Bar */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400 pt-3 border-t border-indigo-950/80">
+            <div className="flex items-center gap-2">
+              <span className="text-slate-300 font-medium">© 2026 Nickora PRO Stüdyo</span>
+              <span aria-hidden="true" className="text-indigo-800">·</span>
+              <span>Tüm hakları saklıdır</span>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+              <button
+                onClick={() => handleOpenLegal('disclaimer')}
+                className="text-amber-300/90 hover:text-white transition-colors underline flex items-center gap-1 font-medium text-[11px]"
+              >
+                <span>Yasal Uyarı</span>
+              </button>
+              <span aria-hidden="true" className="text-indigo-800">·</span>
+              <button
+                onClick={() => handleOpenLegal('privacy')}
+                className="text-indigo-300/90 hover:text-white transition-colors underline flex items-center gap-1 font-medium text-[11px]"
+              >
+                <span>Gizlilik Politikası (KVKK)</span>
+              </button>
+              <span aria-hidden="true" className="text-indigo-800">·</span>
+              <button
+                onClick={() => handleOpenLegal('terms')}
+                className="text-purple-300/90 hover:text-white transition-colors underline flex items-center gap-1 font-medium text-[11px]"
+              >
+                <span>Kullanım Koşulları</span>
+              </button>
+              <span aria-hidden="true" className="text-indigo-800">·</span>
+              <button 
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                className="text-slate-400 hover:text-white transition-colors text-[11px]"
+              >
+                Yukarı Çık ↑
+              </button>
+            </div>
           </div>
         </div>
       </footer>
@@ -579,10 +634,11 @@ export default function App() {
         inputText={inputText}
       />
 
-      {/* KVKK & Privacy Policy Modal */}
-      <KVKKModal
-        isOpen={isKVKKOpen}
-        onClose={() => setIsKVKKOpen(false)}
+      {/* Legal & Terms Modal */}
+      <LegalModal
+        isOpen={isLegalOpen}
+        onClose={() => setIsLegalOpen(false)}
+        initialTab={legalTab}
       />
     </div>
   );
