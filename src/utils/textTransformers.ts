@@ -1,6 +1,7 @@
 /**
  * Comprehensive Unicode character maps and text transformation algorithms
  * Includes support for Turkish character normalization and fallbacks
+ * Features 105 distinct, high-performance font styles and decorations
  */
 
 // Turkish character replacements for Unicode fonts that only have A-Z/a-z
@@ -28,9 +29,9 @@ const maps: Record<string, string> = {
   sansRegular: '𝖠𝖡𝖢𝖣𝖤𝖥𝖦𝖧𝖨𝖩𝖪𝖫𝖬𝖭𝖮𝖯𝖰𝖱𝖲𝖳𝖴𝖵𝖶𝖷𝖸𝖹𝖺𝖻𝖼𝖽𝖾𝖿𝗀𝗁𝗂𝗃𝗄𝗅𝗆𝗇𝗈𝗉𝗊𝗋𝗌𝗍𝗎𝗏𝗐𝗑𝗒𝗓𝟢𝟣𝟤𝟥𝟦𝟧𝟨𝟩𝟪𝟫',
   sansBold: '𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿𝘀𝘁𝘂𝘃𝘄𝘅𝘆𝘇𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟴𝟵',
   sansItalic: '𝘈𝘉𝘊𝘋𝘌𝘍𝘎𝘏𝘐𝘑𝘒𝘓𝘔𝘕𝘖𝘗𝘘𝘙𝘚𝘛𝘜𝘝𝘞𝘟𝘠𝘡𝘢𝘣𝘤𝘥𝘦𝘧𝘨𝘩𝘪𝘫𝘬𝘭𝘮𝘯𝘰𝘱𝘲𝘳𝘴𝘵𝘶𝘷𝘸𝘹𝘺𝘻0123456789',
-  sansBoldItalic: '𝘼𝘽𝘾𝘿𝙀𝙁𝙂𝙃𝙄𝙅𝙆𝙇𝙈𝙉𝙊𝙋𝙌𝙍𝙎𝙏𝙐𝙑𝙒𝙓𝙔𝙕𝙖𝙗𝙘𝙙𝙚𝙛𝙜𝙝𝙞𝙟𝙠𝙡𝙢𝙣𝙤𝙥𝙦𝙧𝙨𝙩𝙪𝙫𝙬𝙭𝙮𝙯0123456789',
+  sansBoldItalic: '𝘼𝘽𝘾𝘿𝙀𝙁𝙂𝙃𝙄𝙅𝙆𝙇𝙈𝙉𝙊𝙋𝙌𝙍𝙎𝙏𝙐𝙑𝙒𝙓𝙔𝙕𝙖𝙗𝙘𝙙𝙚𝙛𝙜𝙝𝙞𝙟𝙠𝙡𝙢𝙣𝙤𝙥𝙦𝙧𝙨𝐭𝙪𝙫𝙬𝙭𝙮𝙯0123456789',
   script: '𝒜ℬ𝒞𝒟ℰℱ𝒢ℋℐ𝒥𝒦ℒℳ𝒩𝒪𝒫𝒬ℛ𝒮𝒯𝒰𝒱𝒲𝒳𝒴𝒵𝒶𝒷𝒸𝒹ℯ𝒻ℊ𝒽𝒾𝒿𝓀𝓁𝓂𝓃ℴ𝓅𝓆𝓇𝓈𝓉𝓊𝓋𝓌𝓍𝓎𝓏0123456789',
-  boldScript: '𝓐𝓑𝓒𝓓𝓔𝓕𝓖𝓗𝓘𝓙𝓚𝓛𝓜𝓝𝓞𝓟𝓠𝓡𝓢𝓣𝓤𝓥𝓦𝓧𝓨𝓩𝓪𝓫𝓬𝓭𝓮𝓯𝓰𝓱𝓲𝓳𝓴𝓵𝓶𝓷𝓸𝓹𝓺𝓻𝓼𝓽𝓾𝓿𝔀𝔁𝔂𝔃0123456789',
+  boldScript: '𝓐𝓑𝓒𝓓𝓔𝓕𝓖𝓗𝓘𝓙𝓚𝓛𝓜𝓝𝓞𝓟𝓠𝓡𝓢𝓣𝓤𝓥𝓦𝓧𝓨𝓩𝓪𝫫𝒸𝓭𝓮𝓯𝓰𝓱𝓲𝓳𝓴𝓵𝓶𝓷𝓸𝓹𝓺𝓻𝓼𝓉𝓾𝓿𝔀𝔁𝔂𝔃0123456789',
   fraktur: '𝔄𝔅ℭ𝔇𝔈𝔉𝔊ℌℑ𝔍𝔎𝔏𝔐𝔑𝔒𝔓𝔔ℜ𝔖𝔗𝔘𝔙𝔚𝔛𝔜ℨ𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔧𝔨𝔩𝔪𝔫𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷0123456789',
   boldFraktur: '𝕬𝕭𝕮𝕯𝕰𝕱𝕲𝕳𝕴𝕵𝕶𝕷𝕸𝕹𝕺𝕻𝕼𝕽𝕾𝕿𝖀𝖁𝖂𝖃𝖄𝖅𝖆𝖇𝖈𝖉𝖊𝖋𝖌𝖍𝖎𝖏𝖐𝖑𝖒𝖓𝖔𝖕𝖖𝖗𝖘𝖙𝖚𝖛𝖜𝖝𝖞𝖟0123456789',
   doubleStruck: '𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ𝕀𝕁𝕂𝕃𝕄ℕ𝕆ℙℚℝ𝕊𝕋𝕌𝕍𝕎𝕏𝕐ℤ𝕒𝕓𝕔𝕕𝕖𝕗𝕘𝕙𝕚𝕛𝕜𝕝𝕞𝕟𝕠𝕡𝕢𝕣𝕤𝕥𝕦𝕧𝕨𝕩𝕪𝕫𝟘𝟙𝟚𝟛𝟜𝟝𝟞𝟟𝟠𝟡',
@@ -44,7 +45,7 @@ const maps: Record<string, string> = {
 };
 
 // Map each standard character to unicode character
-function mapToFont(text: string, targetMap: string): string {
+export function mapToFont(text: string, targetMap: string): string {
   const norm = normalizeTurkish(text);
   const targetChars = Array.from(targetMap);
   return norm.split('').map(char => {
@@ -70,6 +71,38 @@ const smallCapsMap: Record<string, string> = {
 
 export function toSmallCaps(text: string): string {
   return text.split('').map(c => smallCapsMap[c] || c).join('');
+}
+
+// Superscript mapping
+const superscriptMap: Record<string, string> = {
+  a: 'ᵃ', b: 'ᵇ', c: 'ᶜ', d: 'ᵈ', e: 'ᵉ', f: 'ᶠ', g: 'ᵍ', h: 'ʰ', i: 'ⁱ', j: 'ʲ',
+  k: 'ᵏ', l: 'ˡ', m: 'ᵐ', n: 'ⁿ', o: 'ᵒ', p: 'ᵖ', q: 'ᑫ', r: 'ʳ', s: 'ˢ', t: 'ᵗ',
+  u: 'ᵘ', v: 'ᵛ', w: 'ʷ', x: 'ˣ', y: 'ʸ', z: 'ᶻ',
+  A: 'ᴬ', B: 'ᴮ', C: 'ᶜ', D: 'ᴰ', E: 'ᴱ', F: 'ᶠ', G: 'ᴳ', H: 'ᴴ', I: 'ᴵ', J: 'ᴶ',
+  K: 'ᴷ', L: 'ᴸ', M: 'ᴹ', N: 'ᴺ', O: 'ᴼ', P: 'ᴾ', Q: 'ᑫ', R: 'ᴿ', S: 'ˢ', T: 'ᵀ',
+  U: 'ᵁ', V: 'ⱽ', W: 'ᵂ', X: 'ˣ', Y: 'ʸ', Z: 'ᶻ',
+  '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹',
+  '+': '⁺', '-': '⁻', '=': '⁼', '(': '⁽', ')': '⁾'
+};
+
+export function toSuperscript(text: string): string {
+  const norm = normalizeTurkish(text);
+  return norm.split('').map(c => superscriptMap[c] || c).join('');
+}
+
+// Subscript mapping
+const subscriptMap: Record<string, string> = {
+  a: 'ₐ', e: 'ₑ', h: 'ₕ', i: 'ᵢ', j: 'ⱼ', k: 'ₖ', l: 'ₗ', m: 'ₘ', n: 'ₙ', o: 'ₒ',
+  p: 'ₚ', r: 'ᵣ', s: 'ₛ', t: 'ₜ', u: 'ᵤ', v: 'ᵥ', x: 'ₓ',
+  A: 'ₐ', E: 'ₑ', H: 'ₕ', I: 'ᵢ', J: 'ⱼ', K: 'ₖ', L: 'ₗ', M: 'ₘ', N: 'ₙ', O: 'ₒ',
+  P: 'ₚ', R: 'ᵣ', S: 'ₛ', T: 'ₜ', U: 'ᵤ', V: 'ᵥ', X: 'ₓ',
+  '0': '₀', '1': '₁', '2': '₂', '3': '₃', '4': '₄', '5': '₅', '6': '₆', '7': '₇', '8': '₈', '9': '₉',
+  '+': '₊', '-': '₋', '=': '₌', '(': '₍', ')': '₎'
+};
+
+export function toSubscript(text: string): string {
+  const norm = normalizeTurkish(text);
+  return norm.split('').map(c => subscriptMap[c] || c).join('');
 }
 
 // Inverted / Upside Down mapping
@@ -103,6 +136,96 @@ const mirrorMap: Record<string, string> = {
 export function toReversed(text: string): string {
   const norm = normalizeTurkish(text);
   return norm.split('').reverse().map(c => mirrorMap[c] || c).join('');
+}
+
+// Greek / Mythic style mapping
+const greekMap: Record<string, string> = {
+  a: 'α', b: 'в', c: '¢', d: '∂', e: 'є', f: 'ƒ', g: 'g', h: 'н', i: 'ι', j: 'נ',
+  k: 'к', l: 'ℓ', m: 'м', n: 'η', o: 'σ', p: 'ρ', q: 'φ', r: 'я', s: 'ѕ', t: 'т',
+  u: 'υ', v: 'ν', w: 'ω', x: 'χ', y: 'у', z: 'z',
+  A: 'Α', B: 'Β', C: 'Ϲ', D: 'Δ', E: 'Ε', F: 'Ғ', G: 'Γ', H: 'Η', I: 'Ι', J: 'Ϳ',
+  K: 'Κ', L: 'Λ', M: 'Μ', N: 'Ν', O: 'Ο', P: 'Ρ', Q: 'Θ', R: 'Я', S: 'Σ', T: 'Τ',
+  U: 'Υ', V: '∇', W: 'Ω', X: 'Χ', Y: 'Ψ', Z: 'Ζ'
+};
+
+export function toGreek(text: string): string {
+  const norm = normalizeTurkish(text);
+  return norm.split('').map(c => greekMap[c] || c).join('');
+}
+
+// Asian / Oriental character style
+const asianMap: Record<string, string> = {
+  a: '卂', b: '乃', c: '匚', d: '刀', e: '乇', f: '下', g: '厶', h: '卄', i: '工', j: '丁',
+  k: '长', l: '乚', m: '从', n: '𠘨', o: '口', p: '尸', q: 'ዒ', r: '尺', s: '丂', t: '丅',
+  u: '凵', v: 'リ', w: '山', x: '乂', y: '丫', z: '乙',
+  A: '卂', B: '乃', C: '匚', D: '刀', E: '乇', F: '下', G: '厶', H: '卄', I: '工', J: '丁',
+  K: '长', L: '乚', M: '从', N: '𠘨', O: '口', P: '尸', Q: 'ዒ', R: '尺', S: '丂', T: '丅',
+  U: '凵', V: 'リ', W: '山', X: '乂', Y: '丫', Z: '乙'
+};
+
+export function toAsianStyle(text: string): string {
+  const norm = normalizeTurkish(text);
+  return norm.split('').map(c => asianMap[c] || c).join('');
+}
+
+// Curved / Calligraphy mapping
+const curvedMap: Record<string, string> = {
+  a: 'ค', b: '๒', c: 'ƈ', d: 'Ð', e: 'є', f: 'Ŧ', g: 'ﻮ', h: 'ђ', i: 'เ', j: 'ן',
+  k: 'к', l: 'ɭ', m: '๓', n: 'ภ', o: '๏', p: 'ק', q: 'ợ', r: 'г', s: 'ร', t: 'Շ',
+  u: 'ย', v: 'ש', w: 'ɯ', x: 'א', y: 'ץ', z: 'չ',
+  A: 'ค', B: '๒', C: 'Ƈ', D: 'Ɗ', E: 'Є', F: 'Ƒ', G: 'Ɠ', H: 'Ң', I: 'Ɩ', J: 'Ĵ',
+  K: 'Ƙ', L: 'Լ', M: 'Ɱ', N: 'Ɲ', O: 'Ơ', P: 'Ƥ', Q: 'Ǫ', R: 'Ʀ', S: 'Ѕ', T: 'Ƭ',
+  U: 'Ư', V: 'Ʋ', W: 'Ɯ', X: 'Ж', Y: 'Ƴ', Z: 'Ȥ'
+};
+
+export function toCurved(text: string): string {
+  const norm = normalizeTurkish(text);
+  return norm.split('').map(c => curvedMap[c] || c).join('');
+}
+
+// Ancient Viking Runic mapping
+const runicMap: Record<string, string> = {
+  a: 'ᚨ', b: 'ᛒ', c: 'ᚲ', d: 'ᛞ', e: 'ᛖ', f: 'ᚠ', g: 'ᚷ', h: 'ᚺ', i: 'ᛁ', j: 'ᛃ',
+  k: 'ᚲ', l: 'ᛚ', m: 'ᛗ', n: 'ᚾ', o: 'ᛟ', p: 'ᛈ', q: 'ᛩ', r: 'ᚱ', s: 'ᛋ', t: 'ᛏ',
+  u: 'ᚢ', v: 'ᚡ', w: 'ᚹ', x: 'ᛪ', y: 'ᛇ', z: 'ᛉ',
+  A: 'ᚨ', B: 'ᛒ', C: 'ᚲ', D: 'ᛞ', E: 'ᛖ', F: 'ᚠ', G: 'ᚷ', H: 'ᚺ', I: 'ᛁ', J: 'ᛃ',
+  K: 'ᚲ', L: 'ᛚ', M: 'ᛗ', N: 'ᚾ', O: 'ᛟ', P: 'ᛈ', Q: 'ᛩ', R: 'ᚱ', S: 'ᛋ', T: 'ᛏ',
+  U: 'ᚢ', V: 'ᚡ', W: 'ᚹ', X: 'ᛪ', Y: 'ᛇ', Z: 'ᛉ'
+};
+
+export function toRunic(text: string): string {
+  const norm = normalizeTurkish(text);
+  return norm.split('').map(c => runicMap[c] || c).join('');
+}
+
+// Slavic Cyrillic styling
+const cyrillicMap: Record<string, string> = {
+  a: 'а', b: 'б', c: 'с', d: 'д', e: 'е', f: 'ф', g: 'г', h: 'х', i: 'и', j: 'й',
+  k: 'к', l: 'л', m: 'м', n: 'н', o: 'о', p: 'п', q: 'я', r: 'р', s: 'с', t: 'т',
+  u: 'у', v: 'в', w: 'ш', x: 'х', y: 'ы', z: 'з',
+  A: 'А', B: 'Б', C: 'С', D: 'Д', E: 'Е', F: 'Ф', G: 'Г', H: 'Х', I: 'И', J: 'Й',
+  K: 'К', L: 'Л', M: 'М', N: 'Н', O: 'О', P: 'П', Q: 'Я', R: 'Р', S: 'С', T: 'Т',
+  U: 'У', V: 'В', W: 'Ш', X: 'Х', Y: 'Ы', Z: 'З'
+};
+
+export function toCyrillic(text: string): string {
+  const norm = normalizeTurkish(text);
+  return norm.split('').map(c => cyrillicMap[c] || c).join('');
+}
+
+// Currency style mapping
+const currencyMap: Record<string, string> = {
+  a: '₳', b: '฿', c: '¢', d: '₫', e: '€', f: '₣', g: '₲', h: 'Ⱨ', i: 'ł', j: 'ل',
+  k: '₭', l: '£', m: '₥', n: '₦', o: 'Ø', p: '₱', q: 'ℚ', r: '₹', s: '§', t: '₮',
+  u: 'Ʉ', v: 'Ṽ', w: '₩', x: 'Ж', y: '¥', z: 'Ⱬ',
+  A: '₳', B: '฿', C: '¢', D: '₫', E: '€', F: '₣', G: '₲', H: 'Ⱨ', I: 'ł', J: 'ل',
+  K: '₭', L: '£', M: '₥', N: '₦', O: 'Ø', P: '₱', Q: 'ℚ', R: '₹', S: '§', T: '₮',
+  U: 'Ʉ', V: 'Ṽ', W: '₩', X: 'Ж', Y: '¥', Z: 'Ⱬ'
+};
+
+export function toCurrency(text: string): string {
+  const norm = normalizeTurkish(text);
+  return norm.split('').map(c => currencyMap[c] || c).join('');
 }
 
 // Combining diacritic overlays
@@ -191,7 +314,9 @@ export interface FontStyleItem {
 }
 
 export const FONT_STYLES: FontStyleItem[] = [
-  // --- POPULAR FONTS ---
+  // ==========================================
+  // --- 1. POPULAR & CLASSIC FONTS ---
+  // ==========================================
   {
     id: 'bold-serif',
     name: 'Kalın Serif (Matematik)',
@@ -276,8 +401,73 @@ export const FONT_STYLES: FontStyleItem[] = [
     categoryLabel: 'Popüler & Klasik',
     transform: (t) => mapToFont(t, maps.sansBoldItalic),
   },
+  {
+    id: 'sans-regular',
+    name: 'Düz Sans-Serif (Minimal Temiz)',
+    category: 'popular',
+    categoryLabel: 'Popüler & Klasik',
+    transform: (t) => mapToFont(t, maps.sansRegular),
+  },
+  {
+    id: 'superscript-font',
+    name: 'Üst Simge (Superscript ˢᵘᵖᵉʳ)',
+    category: 'popular',
+    categoryLabel: 'Popüler & Klasik',
+    transform: (t) => toSuperscript(t),
+  },
+  {
+    id: 'subscript-font',
+    name: 'Alt Simge (Subscript ₛᵤᵦ)',
+    category: 'popular',
+    categoryLabel: 'Popüler & Klasik',
+    transform: (t) => toSubscript(t),
+  },
+  {
+    id: 'greek-mythic',
+    name: 'Antik Grekçe / Mitoloji (αв¢∂є)',
+    category: 'popular',
+    categoryLabel: 'Popüler & Klasik',
+    transform: (t) => toGreek(t),
+  },
+  {
+    id: 'asian-oriental',
+    name: 'Uzak Doğu / Samuray Karakter (卂乃匚刀)',
+    category: 'popular',
+    categoryLabel: 'Popüler & Klasik',
+    transform: (t) => toAsianStyle(t),
+  },
+  {
+    id: 'curved-calligraphy',
+    name: 'Yay / Kıvrımlı Hat (ค๒ƈÐє)',
+    category: 'popular',
+    categoryLabel: 'Popüler & Klasik',
+    transform: (t) => toCurved(t),
+  },
+  {
+    id: 'ancient-runic',
+    name: 'Antik Viking Rünleri (ᚨᛒᚲᛞ)',
+    category: 'popular',
+    categoryLabel: 'Popüler & Klasik',
+    transform: (t) => toRunic(t),
+  },
+  {
+    id: 'slavic-cyrillic',
+    name: 'Slav / Kiril Esintisi (абсде)',
+    category: 'popular',
+    categoryLabel: 'Popüler & Klasik',
+    transform: (t) => toCyrillic(t),
+  },
+  {
+    id: 'currency-rich',
+    name: 'Zengin / Para Sembolleri (₳฿¢€)',
+    category: 'popular',
+    categoryLabel: 'Popüler & Klasik',
+    transform: (t) => toCurrency(t),
+  },
 
-  // --- BOXED & BUBBLES ---
+  // ==========================================
+  // --- 2. BOXED & BUBBLES ---
+  // ==========================================
   {
     id: 'circles-white',
     name: 'Beyaz Yuvarlak (Bubble)',
@@ -308,7 +498,7 @@ export const FONT_STYLES: FontStyleItem[] = [
   },
   {
     id: 'parenthesized-font',
-    name: 'Parantezli Harfler',
+    name: 'Parantezli Harfler (⒜⒝)',
     category: 'boxed',
     categoryLabel: 'Kutulu & Çember',
     transform: (t) => mapToFont(t, maps.parenthesized),
@@ -327,8 +517,87 @@ export const FONT_STYLES: FontStyleItem[] = [
     categoryLabel: 'Kutulu & Çember',
     transform: (t) => t.split('').filter(c => c !== ' ').map(c => `{${c}}`).join(' '),
   },
+  {
+    id: 'japanese-black-lenses',
+    name: 'Japon Koyu Parantez 【T】【E】【X】【T】',
+    category: 'boxed',
+    categoryLabel: 'Kutulu & Çember',
+    transform: (t) => t.split('').filter(c => c !== ' ').map(c => `【${c}】`).join(' '),
+  },
+  {
+    id: 'japanese-corner-quotes',
+    name: 'Japon Köşeli Tırnak 「T」「E」「X」「T」',
+    category: 'boxed',
+    categoryLabel: 'Kutulu & Çember',
+    transform: (t) => t.split('').filter(c => c !== ' ').map(c => `「${c}」`).join(' '),
+  },
+  {
+    id: 'white-corner-brackets',
+    name: 'Beyaz Köşeli Ayraç 『T』『E』『X』『T』',
+    category: 'boxed',
+    categoryLabel: 'Kutulu & Çember',
+    transform: (t) => t.split('').filter(c => c !== ' ').map(c => `『${c}』`).join(' '),
+  },
+  {
+    id: 'double-angle-brackets',
+    name: 'Çift Açılı Parantez 《T》《E》《X》《T》',
+    category: 'boxed',
+    categoryLabel: 'Kutulu & Çember',
+    transform: (t) => t.split('').filter(c => c !== ' ').map(c => `《${c}》`).join(' '),
+  },
+  {
+    id: 'math-angle-brackets',
+    name: 'Matematiksel Açılı ⟨T⟩⟨E⟩⟨X⟩⟨T⟩',
+    category: 'boxed',
+    categoryLabel: 'Kutulu & Çember',
+    transform: (t) => t.split('').filter(c => c !== ' ').map(c => `⟨${c}⟩`).join(' '),
+  },
+  {
+    id: 'double-parenthesized',
+    name: 'Çift Bombeli Parantez ⸨T⸩⸨E⸩⸨X⸩⸨T⸩',
+    category: 'boxed',
+    categoryLabel: 'Kutulu & Çember',
+    transform: (t) => t.split('').filter(c => c !== ' ').map(c => `⸨${c}⸩`).join(' '),
+  },
+  {
+    id: 'white-square-brackets',
+    name: 'Geniş Köşeli Kalkan ⟦T⟧⟦E⟧⟦X⟧⟦T⟧',
+    category: 'boxed',
+    categoryLabel: 'Kutulu & Çember',
+    transform: (t) => t.split('').filter(c => c !== ' ').map(c => `⟦${c}⟧`).join(' '),
+  },
+  {
+    id: 'boxed-stars',
+    name: 'Yıldızlı Kutucuklar [★T★]',
+    category: 'boxed',
+    categoryLabel: 'Kutulu & Çember',
+    transform: (t) => t.split('').filter(c => c !== ' ').map(c => `[★${c}★]`).join(' '),
+  },
+  {
+    id: 'boxed-hyphens',
+    name: 'Çizgili Kapsül [-T-][-E-]',
+    category: 'boxed',
+    categoryLabel: 'Kutulu & Çember',
+    transform: (t) => t.split('').filter(c => c !== ' ').map(c => `[-${c}-]`).join(' '),
+  },
+  {
+    id: 'enclosing-circle',
+    name: 'Yuvarlak Halka Efekti (e⃝)',
+    category: 'boxed',
+    categoryLabel: 'Kutulu & Çember',
+    transform: (t) => withCombiningDiacritic(t, '\u20DD'),
+  },
+  {
+    id: 'enclosing-square',
+    name: 'Kare Çerçeve Efekti (e⃞)',
+    category: 'boxed',
+    categoryLabel: 'Kutulu & Çember',
+    transform: (t) => withCombiningDiacritic(t, '\u20DE'),
+  },
 
-  // --- AESTHETIC & STYLISH ---
+  // ==========================================
+  // --- 3. AESTHETIC & SOCIAL MEDIA ---
+  // ==========================================
   {
     id: 'vaporwave-wide',
     name: 'Vaporwave / Estetik Geniş Harfler',
@@ -386,6 +655,55 @@ export const FONT_STYLES: FontStyleItem[] = [
     transform: (t) => withCombiningDiacritic(t, '\u0337'),
   },
   {
+    id: 'tilde-strikethrough',
+    name: 'Dalgalı Üstü Çizili (Tilde Strike e̴)',
+    category: 'aesthetic',
+    categoryLabel: 'Estetik & Sosyal Medya',
+    transform: (t) => withCombiningDiacritic(t, '\u0334'),
+  },
+  {
+    id: 'dot-above',
+    name: 'Noktalı Üst Karakterler (ė)',
+    category: 'aesthetic',
+    categoryLabel: 'Estetik & Sosyal Medya',
+    transform: (t) => withCombiningDiacritic(t, '\u0307'),
+  },
+  {
+    id: 'dot-below',
+    name: 'Noktalı Alt Karakterler (ẹ)',
+    category: 'aesthetic',
+    categoryLabel: 'Estetik & Sosyal Medya',
+    transform: (t) => withCombiningDiacritic(t, '\u0323'),
+  },
+  {
+    id: 'caret-roof',
+    name: 'Çatılı / Şapkalı Harfler (ê)',
+    category: 'aesthetic',
+    categoryLabel: 'Estetik & Sosyal Medya',
+    transform: (t) => withCombiningDiacritic(t, '\u0302'),
+  },
+  {
+    id: 'arrow-above',
+    name: 'Vektörel Ok Üstü (e⃗)',
+    category: 'aesthetic',
+    categoryLabel: 'Estetik & Sosyal Medya',
+    transform: (t) => withCombiningDiacritic(t, '\u20D7'),
+  },
+  {
+    id: 'wavy-underline',
+    name: 'Dalgalı Altı Çizili (ḛ)',
+    category: 'aesthetic',
+    categoryLabel: 'Estetik & Sosyal Medya',
+    transform: (t) => withCombiningDiacritic(t, '\u0330'),
+  },
+  {
+    id: 'cross-x-strike',
+    name: 'Çarpı Çizgili (X-Strike e̽)',
+    category: 'aesthetic',
+    categoryLabel: 'Estetik & Sosyal Medya',
+    transform: (t) => withCombiningDiacritic(t, '\u033D'),
+  },
+  {
     id: 'sparkle-aesthetic',
     name: 'Parıltılı ✧ [Metin] ✧',
     category: 'aesthetic',
@@ -413,8 +731,87 @@ export const FONT_STYLES: FontStyleItem[] = [
     categoryLabel: 'Estetik & Sosyal Medya',
     transform: (t) => `❀ 𖤣𖥧 ${t} 𖥧𖤣 ❀`,
   },
+  {
+    id: 'valkyrie-aesthetic',
+    name: 'Valkyrie Kanatları 𓆩 [Metin] 𓆪',
+    category: 'aesthetic',
+    categoryLabel: 'Estetik & Sosyal Medya',
+    transform: (t) => `𓆩 ${toSmallCaps(t)} 𓆪`,
+  },
+  {
+    id: 'butterfly-aesthetic',
+    name: 'Kelebekli 🦋 [Metin] 🦋',
+    category: 'aesthetic',
+    categoryLabel: 'Estetik & Sosyal Medya',
+    transform: (t) => `🦋 ˗ˏˋ ${toSmallCaps(t)} ˎˊ˗ 🦋`,
+  },
+  {
+    id: 'soft-girl-bow',
+    name: 'Kurdeleli Pembe 🎀 [Metin] 🎀',
+    category: 'aesthetic',
+    categoryLabel: 'Estetik & Sosyal Medya',
+    transform: (t) => `🎀 ˚｡⋆ ${toSmallCaps(t)} ⋆｡˚ 🎀`,
+  },
+  {
+    id: 'moon-phase-aesthetic',
+    name: 'Ay Evreleri ☾ ⋆⁺₊⋆ [Metin] ⋆⁺₊⋆ ☽',
+    category: 'aesthetic',
+    categoryLabel: 'Estetik & Sosyal Medya',
+    transform: (t) => `☾ ⋆⁺₊⋆ ${mapToFont(t, maps.script)} ⋆⁺₊⋆ ☽`,
+  },
+  {
+    id: 'angel-cherub',
+    name: 'Melek Kanatları ໒꒰ྀི [Metin] ྀི꒱১',
+    category: 'aesthetic',
+    categoryLabel: 'Estetik & Sosyal Medya',
+    transform: (t) => `໒꒰ྀི ${toSmallCaps(t)} ྀི꒱১`,
+  },
+  {
+    id: 'crystal-gem',
+    name: 'Kristal Parıltı 💎 ✦ [Metin] ✦ 💎',
+    category: 'aesthetic',
+    categoryLabel: 'Estetik & Sosyal Medya',
+    transform: (t) => `💎 ✦ ${toSmallCaps(t)} ✦ 💎`,
+  },
+  {
+    id: 'rose-vintage',
+    name: 'Solgun Gül 🥀 [Metin] 🥀',
+    category: 'aesthetic',
+    categoryLabel: 'Estetik & Sosyal Medya',
+    transform: (t) => `🥀 ⚚ ${mapToFont(t, maps.fraktur)} ⚚ 🥀`,
+  },
+  {
+    id: 'sparkle-cross',
+    name: 'Parıltılı Boşluk ₊˚⊹ [Metin] ⊹˚₊',
+    category: 'aesthetic',
+    categoryLabel: 'Estetik & Sosyal Medya',
+    transform: (t) => `₊˚⊹ ✧ ${toSpaced(t)} ✧ ⊹˚₊`,
+  },
+  {
+    id: 'infinite-aesthetic',
+    name: 'Sonsuzluk Haresi ∞ ༺ [Metin] ༻ ∞',
+    category: 'aesthetic',
+    categoryLabel: 'Estetik & Sosyal Medya',
+    transform: (t) => `∞ ༺ ${mapToFont(t, maps.boldScript)} ༻ ∞`,
+  },
+  {
+    id: 'cute-kaomoji',
+    name: 'Sevimli Kaomoji (๑>ᴗ<๑) ✧ [Metin] ✧',
+    category: 'aesthetic',
+    categoryLabel: 'Estetik & Sosyal Medya',
+    transform: (t) => `(๑>ᴗ<๑) ✧ ${t} ✧`,
+  },
+  {
+    id: 'evil-eye-protection',
+    name: 'Nazar Boncuğu 🧿 ✧ [Metin] ✧ 🧿',
+    category: 'aesthetic',
+    categoryLabel: 'Estetik & Sosyal Medya',
+    transform: (t) => `🧿 ✧ ${toSmallCaps(t)} ✧ 🧿`,
+  },
 
-  // --- NICKNAME & GAMER STYLES ---
+  // ==========================================
+  // --- 4. NICKNAME & GAMER STYLES ---
+  // ==========================================
   {
     id: 'nick-wings-mythic',
     name: 'Efsanevi Kanatlar (Mythic)',
@@ -520,8 +917,129 @@ export const FONT_STYLES: FontStyleItem[] = [
     categoryLabel: 'Oyun Nickleri & Klan',
     transform: (t) => `░▒▓█ ${t.toUpperCase()} █▓▒░`,
   },
+  {
+    id: 'nick-lone-wolf',
+    name: 'Yalnız Kurt 🐺 爪 [Metin] 爪 🐺',
+    category: 'nick',
+    categoryLabel: 'Oyun Nickleri & Klan',
+    transform: (t) => `🐺 爪 ${t.toUpperCase()} 爪 🐺`,
+  },
+  {
+    id: 'nick-inferno-fire',
+    name: 'Alevli Cehennem 🔥 ☬ [Metin] ☬ 🔥',
+    category: 'nick',
+    categoryLabel: 'Oyun Nickleri & Klan',
+    transform: (t) => `🔥 ☬ ${mapToFont(t, maps.boldFraktur)} ☬ 🔥`,
+  },
+  {
+    id: 'nick-ice-frost',
+    name: 'Buzul Fırtınası ❄️ ❅ [Metin] ❅ ❄️',
+    category: 'nick',
+    categoryLabel: 'Oyun Nickleri & Klan',
+    transform: (t) => `❄️ ❅ ${toSmallCaps(t)} ❅ ❄️`,
+  },
+  {
+    id: 'nick-vulture-god',
+    name: 'Antik Mısır Akbaba 𓅓 [Metin] 𓅓',
+    category: 'nick',
+    categoryLabel: 'Oyun Nickleri & Klan',
+    transform: (t) => `𓅓 ${mapToFont(t, maps.boldSerif)} 𓅓`,
+  },
+  {
+    id: 'nick-samurai-katana',
+    name: 'Samuray Katanası ⚔️ 彡[Metin]彡 ⚔️',
+    category: 'nick',
+    categoryLabel: 'Oyun Nickleri & Klan',
+    transform: (t) => `⚔️ 彡[ ${t} ]彡 ⚔️`,
+  },
+  {
+    id: 'nick-phantom-skull',
+    name: 'Hayalet Kafatası ☠︎ 𓆩 [Metin] 𓆪 ☠︎',
+    category: 'nick',
+    categoryLabel: 'Oyun Nickleri & Klan',
+    transform: (t) => `☠︎ 𓆩 ${mapToFont(t, maps.boldFraktur)} 𓆪 ☠︎`,
+  },
+  {
+    id: 'nick-dragon-claw',
+    name: 'Ejder Pençesi 🐲 彡 [Metin] 彡 🐲',
+    category: 'nick',
+    categoryLabel: 'Oyun Nickleri & Klan',
+    transform: (t) => `🐲 彡 ${mapToFont(t, maps.sansBold)} 彡 🐲`,
+  },
+  {
+    id: 'nick-toxic-dagger',
+    name: 'Zehirli Hançer † [Metin] †',
+    category: 'nick',
+    categoryLabel: 'Oyun Nickleri & Klan',
+    transform: (t) => `† ⟦ ${toSmallCaps(t)} ⟧ †`,
+  },
+  {
+    id: 'nick-clan-arrows',
+    name: 'Klan Nişanı »»— [Metin] —««',
+    category: 'nick',
+    categoryLabel: 'Oyun Nickleri & Klan',
+    transform: (t) => `»»———— ${mapToFont(t, maps.boldSerif)} ————««`,
+  },
+  {
+    id: 'nick-joker-laugh',
+    name: 'Joker Delilik 🤡 彡[Metin]彡 🤡',
+    category: 'nick',
+    categoryLabel: 'Oyun Nickleri & Klan',
+    transform: (t) => `🤡 彡[ ${toAlternating(t)} ]彡 🤡`,
+  },
+  {
+    id: 'nick-vip-elite',
+    name: 'VIP Seçkin ★ ᴠɪᴘ 彡 [Metin] ★',
+    category: 'nick',
+    categoryLabel: 'Oyun Nickleri & Klan',
+    transform: (t) => `★ ᴠɪᴘ 彡 ${toSmallCaps(t)} ★`,
+  },
+  {
+    id: 'nick-audio-wave',
+    name: 'Müzik Dalgaları ılı.lıllılı. [Metin] .ılılı.ılli',
+    category: 'nick',
+    categoryLabel: 'Oyun Nickleri & Klan',
+    transform: (t) => `ılı.lıllılı. ${t} .ılılı.ılli`,
+  },
+  {
+    id: 'nick-shield-aegis',
+    name: 'Efsanevi Kalkan 🛡️ ⟦ [Metin] ⟧ 🛡️',
+    category: 'nick',
+    categoryLabel: 'Oyun Nickleri & Klan',
+    transform: (t) => `🛡️ ⟦ ${mapToFont(t, maps.boldSerif)} ⟧ 🛡️`,
+  },
+  {
+    id: 'nick-crosshair-target',
+    name: 'Keskin Nişangah 🎯 ⌖ [Metin] ⌖ 🎯',
+    category: 'nick',
+    categoryLabel: 'Oyun Nickleri & Klan',
+    transform: (t) => `🎯 ⌖ ${t.toUpperCase()} ⌖ 🎯`,
+  },
+  {
+    id: 'nick-gold-stars',
+    name: 'Altın Yıldız ✪ [Metin] ✪',
+    category: 'nick',
+    categoryLabel: 'Oyun Nickleri & Klan',
+    transform: (t) => `✪ ${mapToFont(t, maps.boldSerif)} ✪`,
+  },
+  {
+    id: 'nick-royal-emperor',
+    name: 'İmparator Tacı 👑 ⚜️ [Metin] ⚜️ 👑',
+    category: 'nick',
+    categoryLabel: 'Oyun Nickleri & Klan',
+    transform: (t) => `👑 ⚜️ ${mapToFont(t, maps.boldFraktur)} ⚜️ 👑`,
+  },
+  {
+    id: 'nick-shadow-sith',
+    name: 'Karanlık Lord 𓊈 [Metin] 𓊉',
+    category: 'nick',
+    categoryLabel: 'Oyun Nickleri & Klan',
+    transform: (t) => `𓊈 ${toSmallCaps(t)} 𓊉`,
+  },
 
-  // --- SPECIAL & FUN ENCODINGS ---
+  // ==========================================
+  // --- 5. SPECIAL & FUN ENCODINGS ---
+  // ==========================================
   {
     id: 'zalgo-glitch',
     name: 'Glitch / Zalgo (Bozuk Yazı)',

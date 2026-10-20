@@ -25,13 +25,73 @@ import { HistoryModal, HistoryItem } from './components/HistoryModal';
 import { CommandPaletteModal } from './components/CommandPaletteModal';
 import { BulkExportModal } from './components/BulkExportModal';
 import { SidebarDrawer } from './components/SidebarDrawer';
-import { LegalModal, LegalTab } from './components/LegalModal';
+import { LegalPage, LegalPageType } from './components/LegalPage';
 import { FONT_STYLES, FontStyleItem, toBinary, toMorse } from './utils/textTransformers';
+
+export const getLegalRouteFromPath = (path: string): LegalPageType | null => {
+  try {
+    const clean = decodeURIComponent(path.toLowerCase().replace(/\/$/, ''));
+    if (
+      clean === '/yasal-uyari' ||
+      clean === '/yasaluyari' ||
+      clean === '/yasal-uyarı' ||
+      clean === '/yasaluyarı'
+    ) {
+      return 'disclaimer';
+    }
+    if (
+      clean === '/gizlilik-politikasi' ||
+      clean === '/gizlilikpolitikasi' ||
+      clean === '/gizlilik-politikası' ||
+      clean === '/gizlilikpolitikası' ||
+      clean === '/gizlilikpoliktası' ||
+      clean === '/gizlilikpoliktasi' ||
+      clean === '/kvkk'
+    ) {
+      return 'privacy';
+    }
+    if (
+      clean === '/kullanim-kosullari' ||
+      clean === '/kullanimkosullari' ||
+      clean === '/kullanım-koşulları' ||
+      clean === '/kullanımkoşulları'
+    ) {
+      return 'terms';
+    }
+    return null;
+  } catch {
+    return null;
+  }
+};
 
 type CategoryFilter = 'all' | 'popular' | 'nick' | 'aesthetic' | 'boxed' | 'special';
 type SortOption = 'default' | 'alpha-asc' | 'length-desc';
 
 export default function App() {
+  // Navigation & URL routing state
+  const [currentPath, setCurrentPath] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      return window.location.pathname;
+    }
+    return '/';
+  });
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setCurrentPath(window.location.pathname);
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const navigate = (path: string) => {
+    if (typeof window !== 'undefined') {
+      window.history.pushState({}, '', path);
+      setCurrentPath(path);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   const [activeTab, setActiveTab] = useState<'fonts' | 'bios' | 'builder' | 'symbols' | 'favorites'>('fonts');
   const [inputText, setInputText] = useState<string>('Şekilli Yazı');
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -45,12 +105,15 @@ export default function App() {
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [isExportOpen, setIsExportOpen] = useState(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
-  const [isLegalOpen, setIsLegalOpen] = useState(false);
-  const [legalTab, setLegalTab] = useState<LegalTab>('disclaimer');
 
-  const handleOpenLegal = (tab: LegalTab = 'disclaimer') => {
-    setLegalTab(tab);
-    setIsLegalOpen(true);
+  const handleOpenLegal = (tab: 'disclaimer' | 'privacy' | 'terms' = 'disclaimer') => {
+    if (tab === 'privacy') {
+      navigate('/gizlilikpolitikasi');
+    } else if (tab === 'terms') {
+      navigate('/kullanimkosullari');
+    } else {
+      navigate('/yasaluyari');
+    }
   };
 
   // Favorites state with localStorage - starts completely empty by default
@@ -220,6 +283,18 @@ export default function App() {
 
     return list;
   }, [selectedCategory, searchQuery, activeTab, favorites, sortOption, inputText]);
+
+  // Check if current URL is a dedicated legal page
+  const activeLegalPage = getLegalRouteFromPath(currentPath);
+
+  if (activeLegalPage) {
+    return (
+      <LegalPage 
+        pageType={activeLegalPage} 
+        onNavigate={navigate} 
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#0b0f19] text-slate-100 flex flex-col font-sans relative overflow-x-hidden">
@@ -563,26 +638,29 @@ export default function App() {
             </div>
 
             <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-              <button
-                onClick={() => handleOpenLegal('disclaimer')}
+              <a
+                href="/yasaluyari"
+                onClick={(e) => { e.preventDefault(); navigate('/yasaluyari'); }}
                 className="text-amber-300/90 hover:text-white transition-colors underline flex items-center gap-1 font-medium text-[11px]"
               >
                 <span>Yasal Uyarı</span>
-              </button>
+              </a>
               <span aria-hidden="true" className="text-indigo-800">·</span>
-              <button
-                onClick={() => handleOpenLegal('privacy')}
+              <a
+                href="/gizlilikpolitikasi"
+                onClick={(e) => { e.preventDefault(); navigate('/gizlilikpolitikasi'); }}
                 className="text-indigo-300/90 hover:text-white transition-colors underline flex items-center gap-1 font-medium text-[11px]"
               >
                 <span>Gizlilik Politikası (KVKK)</span>
-              </button>
+              </a>
               <span aria-hidden="true" className="text-indigo-800">·</span>
-              <button
-                onClick={() => handleOpenLegal('terms')}
+              <a
+                href="/kullanimkosullari"
+                onClick={(e) => { e.preventDefault(); navigate('/kullanimkosullari'); }}
                 className="text-purple-300/90 hover:text-white transition-colors underline flex items-center gap-1 font-medium text-[11px]"
               >
                 <span>Kullanım Koşulları</span>
-              </button>
+              </a>
               <span aria-hidden="true" className="text-indigo-800">·</span>
               <button 
                 onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
@@ -632,13 +710,6 @@ export default function App() {
         isOpen={isExportOpen}
         onClose={() => setIsExportOpen(false)}
         inputText={inputText}
-      />
-
-      {/* Legal & Terms Modal */}
-      <LegalModal
-        isOpen={isLegalOpen}
-        onClose={() => setIsLegalOpen(false)}
-        initialTab={legalTab}
       />
     </div>
   );

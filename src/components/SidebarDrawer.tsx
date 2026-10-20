@@ -21,9 +21,11 @@ import {
   CaseLower,
   ArrowLeftRight,
   Binary,
-  Radio
+  Radio,
+  Contrast
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { useTheme } from '../context/ThemeContext';
 
 interface SidebarDrawerProps {
   isOpen: boolean;
@@ -57,6 +59,7 @@ export const SidebarDrawer: React.FC<SidebarDrawerProps> = ({
   onQuickTransform,
   totalFontsCount
 }) => {
+  const { isTrueBlack, setTheme } = useTheme();
   const [copiedBlank, setCopiedBlank] = useState(false);
 
   // Invisible space character (U+3164 Hangul Filler) - universal for PUBG, Brawl Stars, Instagram, etc.
@@ -406,35 +409,94 @@ export const SidebarDrawer: React.FC<SidebarDrawerProps> = ({
             </div>
           </div>
 
-          {/* Navigation Section 4: Yasal Uyarılar & Sözleşmeler */}
+          {/* Navigation Section 4: Görünüm & Tema (True Black vs Midnight) */}
+          <div className="pt-2 border-t border-indigo-950">
+            <div className="px-2 mb-2 flex items-center justify-between">
+              <span className="text-[11px] font-bold tracking-wider uppercase text-indigo-300/80">
+                Görünüm & Tema
+              </span>
+              <span className="text-[10px] text-amber-400 font-mono flex items-center gap-1 font-semibold">
+                <Zap className="w-3 h-3 text-amber-400" />
+                <span>OLED Uyumlu</span>
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => setTheme('midnight')}
+                className={`p-2.5 rounded-xl border text-left transition-all flex flex-col justify-between cursor-pointer ${
+                  !isTrueBlack
+                    ? 'bg-[#151c38] border-indigo-500/80 text-white shadow-sm ring-1 ring-indigo-500/50'
+                    : 'bg-[#11172f] border-indigo-950 text-slate-400 hover:text-white hover:bg-[#182142]'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-1.5">
+                  <div className="w-4 h-4 rounded-full bg-[#0c1122] border border-indigo-500/60 flex items-center justify-center">
+                    <div className="w-2 h-2 rounded-full bg-blue-500"></div>
+                  </div>
+                  {!isTrueBlack && <Check className="w-3.5 h-3.5 text-blue-400" />}
+                </div>
+                <div className="font-bold text-[11px] text-white">Gece Mavisi</div>
+                <div className="text-[9px] text-slate-400 leading-tight">Klasik lacivert karanlık mod</div>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setTheme('true-black')}
+                className={`p-2.5 rounded-xl border text-left transition-all flex flex-col justify-between cursor-pointer ${
+                  isTrueBlack
+                    ? 'bg-zinc-900 border-zinc-500 text-white shadow-sm ring-1 ring-zinc-400'
+                    : 'bg-[#11172f] border-indigo-950 text-slate-400 hover:text-white hover:bg-[#182142]'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-1.5">
+                  <div className="w-4 h-4 rounded-full bg-black border border-zinc-600 flex items-center justify-center">
+                    <Contrast className="w-2.5 h-2.5 text-white" />
+                  </div>
+                  {isTrueBlack && <Check className="w-3.5 h-3.5 text-amber-400" />}
+                </div>
+                <div className="font-bold text-[11px] text-white flex items-center gap-1">
+                  <span>True Black</span>
+                  <span className="text-[8px] font-mono px-1 py-0.2 rounded bg-amber-500/20 text-amber-300">OLED</span>
+                </div>
+                <div className="text-[9px] text-slate-400 leading-tight">Saf #000000 & pil tasarrufu</div>
+              </button>
+            </div>
+          </div>
+
+          {/* Navigation Section 5: Yasal Uyarılar & Sözleşmeler */}
           <div className="pt-2 border-t border-indigo-950">
             <div className="px-2 mb-2 text-[11px] font-bold tracking-wider uppercase text-indigo-300/80">
               Yasal & Kurallar
             </div>
             <div className="space-y-1">
-              <button
-                onClick={() => { onClose(); onOpenLegal('disclaimer'); }}
+              <a
+                href="/yasaluyari"
+                onClick={(e) => { e.preventDefault(); onClose(); onOpenLegal('disclaimer'); }}
                 className="w-full px-3 py-1.5 rounded-lg text-left text-slate-400 hover:text-white hover:bg-indigo-950/50 flex items-center gap-2 text-[11px]"
               >
                 <Scale className="w-3.5 h-3.5 text-amber-400" />
                 <span>Yasal Uyarı & Sorumluluk Reddi</span>
-              </button>
+              </a>
 
-              <button
-                onClick={() => { onClose(); onOpenLegal('privacy'); }}
+              <a
+                href="/gizlilikpolitikasi"
+                onClick={(e) => { e.preventDefault(); onClose(); onOpenLegal('privacy'); }}
                 className="w-full px-3 py-1.5 rounded-lg text-left text-slate-400 hover:text-white hover:bg-indigo-950/50 flex items-center gap-2 text-[11px]"
               >
                 <ShieldCheck className="w-3.5 h-3.5 text-blue-400" />
                 <span>Gizlilik Politikası (KVKK)</span>
-              </button>
+              </a>
 
-              <button
-                onClick={() => { onClose(); onOpenLegal('terms'); }}
+              <a
+                href="/kullanimkosullari"
+                onClick={(e) => { e.preventDefault(); onClose(); onOpenLegal('terms'); }}
                 className="w-full px-3 py-1.5 rounded-lg text-left text-slate-400 hover:text-white hover:bg-indigo-950/50 flex items-center gap-2 text-[11px]"
               >
                 <FileText className="w-3.5 h-3.5 text-purple-400" />
                 <span>Kullanım Koşulları</span>
-              </button>
+              </a>
             </div>
           </div>
 

@@ -6,8 +6,10 @@ import {
   Layers,
   Search,
   ShieldCheck,
-  Menu
+  Menu,
+  Contrast
 } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 
 interface HeaderProps {
   activeTab: 'fonts' | 'bios' | 'builder' | 'symbols' | 'favorites';
@@ -36,6 +38,8 @@ export const Header: React.FC<HeaderProps> = ({
   hasText,
   onOpenSidebar,
 }) => {
+  const { isTrueBlack, toggleTheme } = useTheme();
+
   return (
     <header className="sticky top-0 z-40 bg-[#0c1122]/95 backdrop-blur-2xl border-b border-indigo-950/90 shadow-2xl shadow-indigo-950/40">
       {/* Top Banner Ticker: Minimal Trust Marker */}
@@ -159,6 +163,30 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Zone 3: Clean Actions */}
         <div className="flex items-center gap-2 shrink-0">
+          {/* High-Contrast True Black (OLED) Theme Toggle */}
+          <button
+            onClick={toggleTheme}
+            className={`px-2.5 py-1.5 text-xs font-semibold rounded-xl border transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 cursor-pointer ${
+              isTrueBlack
+                ? 'bg-zinc-900 hover:bg-zinc-800 text-white border-zinc-600 shadow-sm'
+                : 'text-indigo-300 hover:text-white bg-[#0f152b] hover:bg-[#151c38] border-indigo-900/60 shadow-sm'
+            }`}
+            title={isTrueBlack ? 'Varsayılan Gece Mavisi temasına geç' : 'OLED True Black (Yüksek Kontrast & Pil Tasarrufu) temasına geç'}
+            aria-label="True Black tema değiştirici"
+          >
+            <Contrast className={`w-3.5 h-3.5 transition-transform ${isTrueBlack ? 'text-amber-400 rotate-180' : 'text-indigo-400'}`} />
+            <span className="hidden md:inline font-medium">
+              {isTrueBlack ? 'True Black' : 'Gece Mavisi'}
+            </span>
+            <span className={`text-[9px] px-1 py-0.2 rounded font-mono font-bold uppercase ${
+              isTrueBlack
+                ? 'bg-amber-400/20 text-amber-300 border border-amber-400/30'
+                : 'bg-indigo-950 text-indigo-400 border border-indigo-800/40'
+            }`}>
+              {isTrueBlack ? 'OLED' : 'Dark'}
+            </span>
+          </button>
+
           {hasText && (
             <button
               onClick={onClear}

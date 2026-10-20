@@ -52,3 +52,119 @@
   animation: fadeIn 0.2s ease-out forwards;
 }
 
+/* ========================================================================== */
+/* TRUE BLACK (OLED / AMOLED) HIGH-CONTRAST THEME                             */
+/* Designed for 0% OLED pixel emission on black, maximum contrast and battery */
+/* ========================================================================== */
+
+html.true-black {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  color-scheme: dark;
+}
+
+html.true-black body {
+  background-color: #000000 !important;
+}
+
+/* 1. Deepest Pitch Black Canvas (0% battery consumption on OLED) */
+html.true-black .bg-\[\#0b0f19\],
+html.true-black .bg-\[\#070b14\],
+html.true-black .bg-\[\#070a14\],
+html.true-black .bg-\[\#080b14\],
+html.true-black .bg-\[\#060812\],
+html.true-black .bg-\[\#060913\] {
+  background-color: #000000 !important;
+}
+
+/* 2. Top Header, Bars, and Drawers */
+html.true-black .bg-\[\#0c1122\],
+html.true-black .bg-\[\#0c1122\]\/95,
+html.true-black .bg-\[\#0a0f20\],
+html.true-black .bg-\[\#0a0f20\]\/95,
+html.true-black .bg-\[\#0c1124\],
+html.true-black .bg-\[\#090d1c\],
+html.true-black .bg-\[\#090d1a\] {
+  background-color: #050505 !important;
+}
+
+/* 3. Surface Cards, Modals, and Main Sections */
+html.true-black .bg-\[\#10172e\],
+html.true-black .bg-\[\#10172e\]\/90,
+html.true-black .bg-\[\#10172e\]\/85,
+html.true-black .bg-\[\#10172e\]\/80,
+html.true-black .bg-\[\#10172e\]\/70,
+html.true-black .bg-\[\#10172e\]\/60,
+html.true-black .bg-\[\#10172e\]\/50,
+html.true-black .bg-\[\#10172d\],
+html.true-black .bg-\[\#10172d\]\/90,
+html.true-black .bg-\[\#0f152b\],
+html.true-black .bg-\[\#0e1428\],
+html.true-black .bg-\[\#11172f\],
+html.true-black .bg-\[\#0b1021\]\/80 {
+  background-color: #0a0a0c !important;
+}
+
+/* 4. Recessed Inner Elements, Code Blocks, and Inputs */
+html.true-black .bg-\[\#0a0e1c\],
+html.true-black .bg-\[\#0a0e1c\]\/90,
+html.true-black .bg-\[\#0a0e1c\]\/85,
+html.true-black .bg-\[\#0a0e1c\]\/70,
+html.true-black .bg-\[\#080b17\],
+html.true-black .bg-\[\#070914\],
+html.true-black .bg-\[\#121933\],
+html.true-black .bg-\[\#151c38\],
+html.true-black .bg-\[\#182142\],
+html.true-black .bg-\[\#131d3b\] {
+  background-color: #141416 !important;
+}
+
+/* 5. High-Contrast Neutral Borders (Zinc / Charcoal #27272a) */
+html.true-black .border-indigo-950,
+html.true-black .border-indigo-950\/90,
+html.true-black .border-indigo-950\/80,
+html.true-black .border-indigo-950\/70,
+html.true-black .border-indigo-950\/60,
+html.true-black .border-indigo-950\/50,
+html.true-black .border-indigo-900\/50,
+html.true-black .border-indigo-900\/60,
+html.true-black .border-indigo-900\/70,
+html.true-black .border-indigo-900\/80,
+html.true-black .border-indigo-800\/50,
+html.true-black .border-indigo-800\/60,
+html.true-black .border-indigo-800\/80 {
+  border-color: #27272a !important;
+}
+
+/* 6. Clean High-Contrast Typography */
+html.true-black .text-slate-400 {
+  color: #a1a1aa !important;
+}
+html.true-black .text-slate-300 {
+  color: #e4e4e7 !important;
+}
+html.true-black .text-slate-200 {
+  color: #f4f4f5 !important;
+}
+html.true-black .text-slate-100 {
+  color: #ffffff !important;
+}
+
+/* 7. Eliminate radial glow for pure black OLED battery optimization */
+html.true-black .bg-radial-gradient {
+  background: none !important;
+}
+
+/* 8. Neutral Scrollbars in True Black mode */
+html.true-black ::-webkit-scrollbar-thumb {
+  background: rgba(161, 161, 170, 0.25) !important;
+}
+html.true-black ::-webkit-scrollbar-thumb:hover {
+  background: rgba(228, 228, 231, 0.45) !important;
+}
+
+/* 9. High-Contrast Text Selection */
+html.true-black ::selection {
+  background-color: #27272a !important;
+  color: #ffffff !important;
+}
