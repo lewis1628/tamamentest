@@ -560,17 +560,32 @@ export default function App() {
           </div>
         )}
 
-        {/* Feature Highlights Section */}
+        {/* Feature Highlights & SEO Content Section */}
         <section className="mt-16 pt-12 border-t border-indigo-950">
+          <div className="text-center max-w-2xl mx-auto mb-8">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-2">
+              Şekilli Yazı Yazma, Süslü Fontlar ve Oyun Nickleri Rehberi
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-400">
+              Sosyal medya profilleri, oyun klanları ve mesajlaşma uygulamaları için 100+ profesyonel Unicode yazı stili.
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="p-6 rounded-2xl bg-[#10172e]/70 border border-indigo-900/50 shadow-lg shadow-indigo-950/20 backdrop-blur-md">
               <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-blue-500/20 to-blue-600/20 text-blue-400 border border-blue-500/30 flex items-center justify-center mb-4">
                 <Gamepad2 className="w-6 h-6" />
               </div>
               <h3 className="text-base font-bold text-white mb-2">Oyun & Klan Nickleri</h3>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                PUBG Mobile, Brawl Stars, CS2, Valorant, Free Fire ve Roblox için şekilli klan adları ve havalı oyuncu nickleri oluşturun.
+              <p className="text-xs text-slate-300 leading-relaxed mb-3">
+                PUBG Mobile, Brawl Stars, CS2, Valorant, Free Fire ve Roblox için şekilli klan adları, havalı semboller ve dövüşçü nickleri oluşturun.
               </p>
+              <button
+                onClick={() => { setActiveTab('builder'); window.scrollTo({ top: 380, behavior: 'smooth' }); }}
+                className="text-xs text-blue-400 hover:text-blue-300 font-semibold underline inline-flex items-center gap-1"
+              >
+                Nick Oluşturucu'ya Git →
+              </button>
             </div>
 
             <div className="p-6 rounded-2xl bg-[#10172e]/70 border border-indigo-900/50 shadow-lg shadow-indigo-950/20 backdrop-blur-md">
@@ -578,9 +593,15 @@ export default function App() {
                 <Palette className="w-6 h-6" />
               </div>
               <h3 className="text-base font-bold text-white mb-2">Instagram & TikTok Bio</h3>
-              <p className="text-xs text-slate-300 leading-relaxed">
+              <p className="text-xs text-slate-300 leading-relaxed mb-3">
                 Sosyal medya profillerinizde dikkat çeken estetik yazılar, kalın serifler, el yazısı biyografi sözleri ve süslü emojiler kullanın.
               </p>
+              <button
+                onClick={() => { setActiveTab('bios'); window.scrollTo({ top: 380, behavior: 'smooth' }); }}
+                className="text-xs text-purple-400 hover:text-purple-300 font-semibold underline inline-flex items-center gap-1"
+              >
+                Bio Şablonlarını İncele →
+              </button>
             </div>
 
             <div className="p-6 rounded-2xl bg-[#10172e]/70 border border-indigo-900/50 shadow-lg shadow-indigo-950/20 backdrop-blur-md">
@@ -588,27 +609,69 @@ export default function App() {
                 <Copy className="w-6 h-6" />
               </div>
               <h3 className="text-base font-bold text-white mb-2">Tek Tıkla Kopyala & Kullan</h3>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Evrensel Unicode karakter kodlaması sayesinde ekstra font yüklemenize gerek kalmadan doğrudan WhatsApp, Discord ve Twitter'a yapıştırın.
+              <p className="text-xs text-slate-300 leading-relaxed mb-3">
+                Evrensel Unicode karakter standartları sayesinde ek uygulama indirmeden doğrudan WhatsApp, Discord ve Twitter'a yapıştırın.
               </p>
+              <button
+                onClick={() => { setActiveTab('symbols'); window.scrollTo({ top: 380, behavior: 'smooth' }); }}
+                className="text-xs text-indigo-400 hover:text-indigo-300 font-semibold underline inline-flex items-center gap-1"
+              >
+                Sembol Kütüphanesini Aç →
+              </button>
+            </div>
+          </div>
+
+          {/* Informative Article Block for Natural SEO Authority */}
+          <div className="mt-8 p-6 sm:p-8 rounded-2xl bg-[#0e1428]/80 border border-indigo-950 text-xs sm:text-sm text-slate-300 leading-relaxed space-y-4">
+            <h3 className="text-base font-bold text-white">
+              Şekilli Yazı Nedir ve Nasıl Çalışır?
+            </h3>
+            <p>
+              Şekilli yazı yazma araçları, girdiğiniz standart Latin harflerini özel <strong>Unicode karakter tablosundaki</strong> eşdeğer sembollerle değiştirir. Bu işlem harici bir font dosyası yüklemeyi gerektirmez; bu sayede oluşturulan süslü fontlar, havalı nickler ve estetik yazılar tüm cep telefonlarında, tarayıcılarda ve popüler oyun istemcilerinde doğrudan görüntülenebilir.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+              <div className="p-4 rounded-xl bg-indigo-950/30 border border-indigo-900/40">
+                <h4 className="font-bold text-white mb-1">🎮 Oyunlarda Havalı İsim ve Klan Tagı</h4>
+                <p className="text-slate-400 text-xs">
+                  PUBG Mobile, Valorant, Brawl Stars ve CS2 gibi oyunlarda klan simgeleri (亗, ꧁༺, ⚔️, ♛) ile rakiplerinizden farklılaşan benzersiz oyuncu kimlikleri oluşturabilirsiniz.
+                </p>
+              </div>
+              <div className="p-4 rounded-xl bg-indigo-950/30 border border-indigo-900/40">
+                <h4 className="font-bold text-white mb-1">✨ Sosyal Medya Profilleri & Biyografi</h4>
+                <p className="text-slate-400 text-xs">
+                  Instagram, TikTok, Twitter ve WhatsApp biyografinizi kalın, italik, gotik veya el yazısı fontlarıyla süsleyerek profil ziyaretçilerinize profesyonel bir görünüm sunabilirsiniz.
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* FAQ Section */}
+        {/* FAQ Section - Schema.org Aligned */}
         <section className="mt-12 p-6 sm:p-8 rounded-2xl bg-[#10172e]/50 border border-indigo-900/50 shadow-md">
           <h3 className="text-lg font-bold text-white mb-4">Sıkça Sorulan Sorular</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-slate-300 leading-relaxed">
             <div>
               <h4 className="text-sm font-bold text-white mb-1.5">Şekilli yazılar her telefonda ve oyunda görünür mü?</h4>
               <p>
-                Evet! Üretilen tüm yazı stilleri evrensel Unicode karakter standartlarına uygundur. iOS, Android, Windows, Mac ve oyun platformlarında sorunsuz görünür.
+                Evet! Üretilen tüm yazı stilleri evrensel Unicode karakter standartlarına uygundur. iOS, Android, Windows, Mac, Instagram, WhatsApp, Discord, PUBG Mobile ve Valorant gibi platformlarda sorunsuz görünür.
               </p>
             </div>
             <div>
               <h4 className="text-sm font-bold text-white mb-1.5">Türkçe karakterler (ç, ğ, ı, ö, ş, ü) bozulur mu?</h4>
               <p>
                 Gelişmiş akıllı karakter eşleştiricimiz Türkçe karakterleri destekler ve Unicode fontlarının desteklemediği durumlarda yazının bozulmaması için otomatik uyarlama yapar.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-sm font-bold text-white mb-1.5">Şekilli nickler oyunlarda veya sosyal medyada ban sebebi midir?</h4>
+              <p>
+                Hayır. Nickora standart Unicode alfabe ve sembollerini kullanır. Sistem oyun dosyalarına veya platform kodlarına müdahale etmez; bu nedenle ban veya hesap engeli riski taşımaz.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-sm font-bold text-white mb-1.5">Instagram biyografisinde veya WhatsApp isminde nasıl kullanılır?</h4>
+              <p>
+                Beğendiğiniz yazı stilinin yanındaki Kopyala butonuna tıklayın. Ardından Instagram profil düzenleme veya WhatsApp ayarlarında ilgili alana yapıştırmanız yeterlidir.
               </p>
             </div>
           </div>

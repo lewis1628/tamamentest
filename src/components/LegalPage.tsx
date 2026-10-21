@@ -29,17 +29,58 @@ export const LegalPage: React.FC<LegalPageProps> = ({ pageType, onNavigate }) =>
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     
-    // Update document title for SEO & clarity
+    let pageTitle = 'Nickora - Şekilli Yazı Yazma & Süslü Font Oluşturucu';
+    let canonicalUrl = 'https://sekilliyaz.com.tr/';
+    let metaDesc = 'Normal metinleri anında havalı şekilli yazılara, 100+ süslü fonta ve oyun nicklerine dönüştürün. Tek tıkla kopyalayın.';
+
     if (pageType === 'disclaimer') {
-      document.title = 'Yasal Uyarı & Sorumluluk Reddi | Nickora';
+      pageTitle = 'Yasal Uyarı ve Marka Sorumluluk Reddi | Nickora';
+      canonicalUrl = 'https://sekilliyaz.com.tr/yasaluyari';
+      metaDesc = 'Nickora platformunun hukuki esasları, üçüncü taraf ticari marka hakları ve yasal sorumluluk reddi beyanı.';
     } else if (pageType === 'privacy') {
-      document.title = 'Gizlilik Politikası (KVKK) | Nickora';
+      pageTitle = 'Gizlilik Politikası ve KVKK Aydınlatma Metni | Nickora';
+      canonicalUrl = 'https://sekilliyaz.com.tr/gizlilikpolitikasi';
+      metaDesc = 'Nickora gizlilik politikası, KVKK kapsamında veri işleme ilkeleri ve kullanıcı gizliliği taahhütleri.';
     } else if (pageType === 'terms') {
-      document.title = 'Kullanım Koşulları | Nickora';
+      pageTitle = 'Kullanım Koşulları ve Hizmet Sözleşmesi | Nickora';
+      canonicalUrl = 'https://sekilliyaz.com.tr/kullanimkosullari';
+      metaDesc = 'Nickora platformu kullanım şartları, fikri mülkiyet hakları ve hizmet kuralları.';
+    }
+
+    document.title = pageTitle;
+
+    // Update canonical link
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute('href', canonicalUrl);
+
+    // Update meta description
+    const descMeta = document.querySelector('meta[name="description"]');
+    if (descMeta) {
+      descMeta.setAttribute('content', metaDesc);
+    }
+
+    // Update OG URL
+    const ogUrl = document.querySelector('meta[property="og:url"]');
+    if (ogUrl) {
+      ogUrl.setAttribute('content', canonicalUrl);
     }
 
     return () => {
-      document.title = 'Nickora - Şekilli Yazı Yazma & Süslü Nickler';
+      document.title = 'Nickora - Şekilli Yazı Yazma & Süslü Font Oluşturucu';
+      if (canonical) {
+        canonical.setAttribute('href', 'https://sekilliyaz.com.tr/');
+      }
+      if (descMeta) {
+        descMeta.setAttribute('content', 'Normal metinleri anında havalı şekilli yazılara, 100+ süslü fonta ve oyun nicklerine dönüştürün. Tek tıkla kopyalayın, Instagram, WhatsApp ve oyunlarda kullanın.');
+      }
+      if (ogUrl) {
+        ogUrl.setAttribute('content', 'https://sekilliyaz.com.tr/');
+      }
     };
   }, [pageType]);
 
