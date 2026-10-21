@@ -32,6 +32,7 @@ const BulkExportModal = lazy(() => import('./components/BulkExportModal').then(m
 const SidebarDrawer = lazy(() => import('./components/SidebarDrawer').then(m => ({ default: m.SidebarDrawer })));
 const LegalPage = lazy(() => import('./components/LegalPage').then(m => ({ default: m.LegalPage })));
 const SitemapViewer = lazy(() => import('./components/SitemapViewer').then(m => ({ default: m.SitemapViewer })));
+const NotFoundPage = lazy(() => import('./components/NotFoundPage').then(m => ({ default: m.NotFoundPage })));
 
 export const getLegalRouteFromPath = (path: string): LegalPageType | null => {
   try {
@@ -81,6 +82,19 @@ export const getSpecialRouteFromPath = (path: string): 'sitemap' | 'robots' | nu
     return null;
   } catch {
     return null;
+  }
+};
+
+export const isKnownRoute = (path: string): boolean => {
+  try {
+    const clean = decodeURIComponent(path.toLowerCase().replace(/\/$/, ''));
+    if (clean === '' || clean === '/index.html' || clean === '/') return true;
+    if (getLegalRouteFromPath(clean) !== null) return true;
+    if (getSpecialRouteFromPath(clean) !== null) return true;
+    if (clean === '/health' || clean === '/health.json') return true;
+    return false;
+  } catch {
+    return false;
   }
 };
 
@@ -346,6 +360,33 @@ export default function App() {
         <SitemapViewer
           type={specialRoute}
           onNavigate={navigate}
+        />
+      </Suspense>
+    );
+  }
+
+  // Check if current URL is health check probe
+  const cleanPath = currentPath.toLowerCase().replace(/\/$/, '');
+  if (cleanPath === '/health' || cleanPath === '/health.json') {
+    return (
+      <div className="min-h-screen bg-[#070b14] flex items-center justify-center p-4">
+        <pre className="p-6 bg-slate-900/95 border border-slate-800 rounded-xl text-emerald-400 font-mono text-xs sm:text-sm shadow-xl">
+          {JSON.stringify({ status: 'healthy', service: 'SekilliYaz-Nickora', version: '1.0.0', uptime: 'ok' }, null, 2)}
+        </pre>
+      </div>
+    );
+  }
+
+  // Check if current URL is an unknown path -> Custom 404 page
+  if (!isKnownRoute(currentPath)) {
+    return (
+      <Suspense fallback={<div className="min-h-screen bg-[#070b14] flex items-center justify-center text-slate-400">Yükleniyor...</div>}>
+        <NotFoundPage
+          onNavigate={navigate}
+          onSelectTab={(tab) => {
+            setActiveTab(tab);
+            navigate('/');
+          }}
         />
       </Suspense>
     );

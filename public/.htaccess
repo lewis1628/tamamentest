@@ -50,14 +50,25 @@
   ExpiresByType font/woff "access plus 1 year"
 </IfModule>
 
+# Security Hardening & Information Hiding
+ServerSignature Off
+
 <IfModule mod_headers.c>
+  # Production HTTP Security Headers
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set X-XSS-Protection "1; mode=block"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+  Header unset X-Powered-By
+
   # 1 year cache for hashed Vite assets
   <FilesMatch "\.(js|css|woff2|woff|ttf|png|svg|webp|ico)$">
     Header set Cache-Control "max-age=31536000, public, immutable"
   </FilesMatch>
 
   # Do not cache index.html or sitemap.xml so deployments and updates are immediate
-  <FilesMatch "(index\.html|sitemap\.xml|robots\.txt)$">
+  <FilesMatch "(index\.html|sitemap\.xml|robots\.txt|health|health\.json)$">
     Header set Cache-Control "no-cache, no-store, must-revalidate"
     Header set Pragma "no-cache"
     Header set Expires 0
