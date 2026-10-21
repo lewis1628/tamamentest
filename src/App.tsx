@@ -26,6 +26,7 @@ import { CommandPaletteModal } from './components/CommandPaletteModal';
 import { BulkExportModal } from './components/BulkExportModal';
 import { SidebarDrawer } from './components/SidebarDrawer';
 import { LegalPage, LegalPageType } from './components/LegalPage';
+import { SitemapViewer } from './components/SitemapViewer';
 import { FONT_STYLES, FontStyleItem, toBinary, toMorse } from './utils/textTransformers';
 
 export const getLegalRouteFromPath = (path: string): LegalPageType | null => {
@@ -57,6 +58,21 @@ export const getLegalRouteFromPath = (path: string): LegalPageType | null => {
       clean === '/kullanımkoşulları'
     ) {
       return 'terms';
+    }
+    return null;
+  } catch {
+    return null;
+  }
+};
+
+export const getSpecialRouteFromPath = (path: string): 'sitemap' | 'robots' | null => {
+  try {
+    const clean = decodeURIComponent(path.toLowerCase().replace(/\/$/, ''));
+    if (clean === '/sitemap.xml' || clean === '/sitemap') {
+      return 'sitemap';
+    }
+    if (clean === '/robots.txt' || clean === '/robots') {
+      return 'robots';
     }
     return null;
   } catch {
@@ -292,6 +308,17 @@ export default function App() {
       <LegalPage 
         pageType={activeLegalPage} 
         onNavigate={navigate} 
+      />
+    );
+  }
+
+  // Check if current URL is sitemap or robots
+  const specialRoute = getSpecialRouteFromPath(currentPath);
+  if (specialRoute) {
+    return (
+      <SitemapViewer
+        type={specialRoute}
+        onNavigate={navigate}
       />
     );
   }
