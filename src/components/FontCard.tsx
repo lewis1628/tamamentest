@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Copy, Check, Star, Eye, Share2, Smartphone, QrCode } from 'lucide-react';
-import confetti from 'canvas-confetti';
 
 interface FontCardProps {
   id: string;
@@ -16,7 +15,7 @@ interface FontCardProps {
   fontSize?: 'sm' | 'md' | 'lg';
 }
 
-export const FontCard: React.FC<FontCardProps> = ({
+const FontCardComponent: React.FC<FontCardProps> = ({
   id,
   name,
   categoryLabel,
@@ -55,15 +54,18 @@ export const FontCard: React.FC<FontCardProps> = ({
       const x = (rect.left + rect.width / 2) / window.innerWidth;
       const y = (rect.top + rect.height / 2) / window.innerHeight;
 
-      confetti({
-        particleCount: 18,
-        spread: 50,
-        startVelocity: 18,
-        ticks: 55,
-        origin: { x, y },
-        colors: ['#3b82f6', '#8b5cf6', '#a855f7', '#6366f1', '#ffffff'],
-        disableForReducedMotion: true,
-      });
+      import('canvas-confetti').then((module) => {
+        const confetti = module.default;
+        confetti({
+          particleCount: 18,
+          spread: 50,
+          startVelocity: 18,
+          ticks: 55,
+          origin: { x, y },
+          colors: ['#3b82f6', '#8b5cf6', '#a855f7', '#6366f1', '#ffffff'],
+          disableForReducedMotion: true,
+        });
+      }).catch(() => {});
     } catch {
       // safe fallback
     }
@@ -263,3 +265,5 @@ export const FontCard: React.FC<FontCardProps> = ({
     </div>
   );
 };
+
+export const FontCard = React.memo(FontCardComponent);

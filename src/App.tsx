@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, Suspense, lazy } from 'react';
 import { 
   Search, 
   Sparkles, 
@@ -16,18 +16,22 @@ import {
 import { Header } from './components/Header';
 import { TextInputArea } from './components/TextInputArea';
 import { FontCard } from './components/FontCard';
-import { NickBuilder } from './components/NickBuilder';
-import { SymbolPicker } from './components/SymbolPicker';
-import { BioTemplates } from './components/BioTemplates';
-import { SocialPreviewModal } from './components/SocialPreviewModal';
-import { QRCodeModal } from './components/QRCodeModal';
-import { HistoryModal, HistoryItem } from './components/HistoryModal';
-import { CommandPaletteModal } from './components/CommandPaletteModal';
-import { BulkExportModal } from './components/BulkExportModal';
-import { SidebarDrawer } from './components/SidebarDrawer';
-import { LegalPage, LegalPageType } from './components/LegalPage';
-import { SitemapViewer } from './components/SitemapViewer';
+import type { HistoryItem } from './components/HistoryModal';
+import type { LegalPageType } from './components/LegalPage';
 import { FONT_STYLES, FontStyleItem, toBinary, toMorse } from './utils/textTransformers';
+
+// Lazy loaded secondary views and modals to keep initial bundle tiny and fast
+const NickBuilder = lazy(() => import('./components/NickBuilder').then(m => ({ default: m.NickBuilder })));
+const SymbolPicker = lazy(() => import('./components/SymbolPicker').then(m => ({ default: m.SymbolPicker })));
+const BioTemplates = lazy(() => import('./components/BioTemplates').then(m => ({ default: m.BioTemplates })));
+const SocialPreviewModal = lazy(() => import('./components/SocialPreviewModal').then(m => ({ default: m.SocialPreviewModal })));
+const QRCodeModal = lazy(() => import('./components/QRCodeModal').then(m => ({ default: m.QRCodeModal })));
+const HistoryModal = lazy(() => import('./components/HistoryModal').then(m => ({ default: m.HistoryModal })));
+const CommandPaletteModal = lazy(() => import('./components/CommandPaletteModal').then(m => ({ default: m.CommandPaletteModal })));
+const BulkExportModal = lazy(() => import('./components/BulkExportModal').then(m => ({ default: m.BulkExportModal })));
+const SidebarDrawer = lazy(() => import('./components/SidebarDrawer').then(m => ({ default: m.SidebarDrawer })));
+const LegalPage = lazy(() => import('./components/LegalPage').then(m => ({ default: m.LegalPage })));
+const SitemapViewer = lazy(() => import('./components/SitemapViewer').then(m => ({ default: m.SitemapViewer })));
 
 export const getLegalRouteFromPath = (path: string): LegalPageType | null => {
   try {
@@ -300,15 +304,37 @@ export default function App() {
     return list;
   }, [selectedCategory, searchQuery, activeTab, favorites, sortOption, inputText]);
 
+  // Progressive rendering: render first 30 cards instantly for zero F5 lag, then expand to all 100+ cards seamlessly
+  const [renderLimit, setRenderLimit] = useState(30);
+
+  useEffect(() => {
+    if (renderLimit < filteredFonts.length) {
+      const timer = setTimeout(() => {
+        setRenderLimit(filteredFonts.length);
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [renderLimit, filteredFonts.length]);
+
+  useEffect(() => {
+    setRenderLimit(30);
+  }, [searchQuery, selectedCategory, sortOption]);
+
+  const visibleFonts = useMemo(() => {
+    return filteredFonts.slice(0, renderLimit);
+  }, [filteredFonts, renderLimit]);
+
   // Check if current URL is a dedicated legal page
   const activeLegalPage = getLegalRouteFromPath(currentPath);
 
   if (activeLegalPage) {
     return (
-      <LegalPage 
-        pageType={activeLegalPage} 
-        onNavigate={navigate} 
-      />
+      <Suspense fallback={<div className="min-h-screen bg-[#070b14] flex items-center justify-center text-slate-400">Yükleniyor...</div>}>
+        <LegalPage 
+          pageType={activeLegalPage} 
+          onNavigate={navigate} 
+        />
+      </Suspense>
     );
   }
 
@@ -316,10 +342,12 @@ export default function App() {
   const specialRoute = getSpecialRouteFromPath(currentPath);
   if (specialRoute) {
     return (
-      <SitemapViewer
-        type={specialRoute}
-        onNavigate={navigate}
-      />
+      <Suspense fallback={<div className="min-h-screen bg-[#070b14] flex items-center justify-center text-slate-400">Yükleniyor...</div>}>
+        <SitemapViewer
+          type={specialRoute}
+          onNavigate={navigate}
+        />
+      </Suspense>
     );
   }
 
@@ -350,22 +378,24 @@ export default function App() {
       />
 
       {/* Slide-out Left Navigation Drawer */}
-      <SidebarDrawer
-        isOpen={isSidebarOpen}
-        onClose={() => setIsSidebarOpen(false)}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
-        favoritesCount={favorites.length}
-        historyCount={history.length}
-        onOpenHistory={() => setIsHistoryOpen(true)}
-        onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
-        onOpenExport={() => setIsExportOpen(true)}
-        onOpenLegal={handleOpenLegal}
-        onQuickTransform={handleQuickTransform}
-        totalFontsCount={FONT_STYLES.length}
-      />
+      <Suspense fallback={null}>
+        <SidebarDrawer
+          isOpen={isSidebarOpen}
+          onClose={() => setIsSidebarOpen(false)}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+          favoritesCount={favorites.length}
+          historyCount={history.length}
+          onOpenHistory={() => setIsHistoryOpen(true)}
+          onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+          onOpenExport={() => setIsExportOpen(true)}
+          onOpenLegal={handleOpenLegal}
+          onQuickTransform={handleQuickTransform}
+          totalFontsCount={FONT_STYLES.length}
+        />
+      </Suspense>
 
       {/* Main Content Area */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 relative z-10">
@@ -395,22 +425,31 @@ export default function App() {
         />
 
         {/* View Switcher based on activeTab */}
-        {activeTab === 'bios' ? (
-          <BioTemplates
-            onPreview={handleOpenPreview}
-            onOpenQR={handleOpenQR}
-          />
-        ) : activeTab === 'builder' ? (
-          <NickBuilder
-            baseText={inputText}
-            onPreview={handleOpenPreview}
-          />
-        ) : activeTab === 'symbols' ? (
-          <SymbolPicker
-            onInsertSymbol={handleInsertSymbol}
-          />
-        ) : (
-          /* Font List View (Fonts or Favorites) */
+        <Suspense fallback={
+          <div className="py-16 text-center text-slate-400">
+            <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+            <span className="text-xs">Yükleniyor...</span>
+          </div>
+        }>
+          {activeTab === 'bios' ? (
+            <BioTemplates
+              onPreview={handleOpenPreview}
+              onOpenQR={handleOpenQR}
+            />
+          ) : activeTab === 'builder' ? (
+            <NickBuilder
+              baseText={inputText}
+              onPreview={handleOpenPreview}
+            />
+          ) : activeTab === 'symbols' ? (
+            <SymbolPicker
+              onInsertSymbol={handleInsertSymbol}
+            />
+          ) : null}
+        </Suspense>
+
+        {/* Font List View (Fonts or Favorites) */}
+        {(activeTab === 'fonts' || activeTab === 'favorites') && (
           <div>
             {/* Filter and Control Bar */}
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
@@ -566,7 +605,7 @@ export default function App() {
               </div>
             ) : (
               <div className={viewMode === 'grid' ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" : "space-y-2.5"}>
-                {filteredFonts.map((font) => (
+                {visibleFonts.map((font) => (
                   <FontCard
                     key={font.id}
                     id={font.id}
@@ -763,44 +802,56 @@ export default function App() {
         </div>
       </footer>
 
-      {/* Social & Gaming Live Preview Modal */}
-      <SocialPreviewModal
-        isOpen={previewModal.isOpen}
-        onClose={() => setPreviewModal(prev => ({ ...prev, isOpen: false }))}
-        previewText={previewModal.text}
-        fontName={previewModal.fontName}
-      />
+      <Suspense fallback={null}>
+        {/* Social & Gaming Live Preview Modal */}
+        {previewModal.isOpen && (
+          <SocialPreviewModal
+            isOpen={previewModal.isOpen}
+            onClose={() => setPreviewModal(prev => ({ ...prev, isOpen: false }))}
+            previewText={previewModal.text}
+            fontName={previewModal.fontName}
+          />
+        )}
 
-      {/* QR Code Modal */}
-      <QRCodeModal
-        isOpen={qrModal.isOpen}
-        onClose={() => setQrModal(prev => ({ ...prev, isOpen: false }))}
-        text={qrModal.text}
-        title={qrModal.title}
-      />
+        {/* QR Code Modal */}
+        {qrModal.isOpen && (
+          <QRCodeModal
+            isOpen={qrModal.isOpen}
+            onClose={() => setQrModal(prev => ({ ...prev, isOpen: false }))}
+            text={qrModal.text}
+            title={qrModal.title}
+          />
+        )}
 
-      {/* History Modal */}
-      <HistoryModal
-        isOpen={isHistoryOpen}
-        onClose={() => setIsHistoryOpen(false)}
-        history={history}
-        onClearHistory={() => setHistory([])}
-      />
+        {/* History Modal */}
+        {isHistoryOpen && (
+          <HistoryModal
+            isOpen={isHistoryOpen}
+            onClose={() => setIsHistoryOpen(false)}
+            history={history}
+            onClearHistory={() => setHistory([])}
+          />
+        )}
 
-      {/* Spotlight Command Palette (Ctrl+K) */}
-      <CommandPaletteModal
-        isOpen={isCommandPaletteOpen}
-        onClose={() => setIsCommandPaletteOpen(false)}
-        inputText={inputText}
-        onSelectText={(text, title) => handleCopiedToHistory(text, title)}
-      />
+        {/* Spotlight Command Palette (Ctrl+K) */}
+        {isCommandPaletteOpen && (
+          <CommandPaletteModal
+            isOpen={isCommandPaletteOpen}
+            onClose={() => setIsCommandPaletteOpen(false)}
+            inputText={inputText}
+            onSelectText={(text, title) => handleCopiedToHistory(text, title)}
+          />
+        )}
 
-      {/* Bulk Export Modal */}
-      <BulkExportModal
-        isOpen={isExportOpen}
-        onClose={() => setIsExportOpen(false)}
-        inputText={inputText}
-      />
+        {/* Bulk Export Modal */}
+        {isExportOpen && (
+          <BulkExportModal
+            isOpen={isExportOpen}
+            onClose={() => setIsExportOpen(false)}
+            inputText={inputText}
+          />
+        )}
+      </Suspense>
     </div>
   );
 }
